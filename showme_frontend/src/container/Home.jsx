@@ -55,7 +55,7 @@ const Home = () => {
           </Link>
         </div>
         {toggleSidebar && (
-          <div className="fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
+          <div className="fixed w-4/5 h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
             <div className="absolute w-full flex justify-end items-center p-2">
               <AiFillCloseCircle
                 fontSize={30}
@@ -67,7 +67,14 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
+      <div
+        className="pb-2 flex-1 h-screen overflow-y-scroll"
+        ref={scrollRef}
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(156,61,84,1) 0%, rgba(226,112,58,1) 50%, rgba(238,183,107,1) 100%)",
+        }}
+      >
         <Routes>
           <Route path="/user-profile/:userId" element={<UserProfile />} />
           <Route path="/*" element={<Pins user={user && user} />} />

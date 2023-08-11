@@ -77,7 +77,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
               {alreadySaved ? (
                 <button
                   type="button"
-                  className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+                  className="bg-[#00d4ff] opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                 >
                   {save?.length} Saved
                 </button>
@@ -88,7 +88,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                     savePin(_id);
                   }}
                   type="button"
-                  className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+                  className="bg-[#00d4ff] opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                 >
                   Save
                 </button>
@@ -97,7 +97,10 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
             <div className="flex justify-between items-center gap-2 w-full">
               {destination && (
                 <a
-                  href={destination}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  href={destination.startsWith("http") ? destination : `https://${destination}`}
                   target="_blank"
                   rel="noreferrer"
                   className="bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md"
@@ -124,17 +127,16 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
           </div>
         )}
       </div>
-      <Link
-        to={`user-profile/${postedBy?._id}`}
-        className="flex gap-2 mt-2 items-center"
-      >
+      <div className="flex gap-2 mt-2 items-center">
         <img
           className="w-8 h-8 rounded-full object-cover"
           src={postedBy?.image}
           alt="user-profile"
         />
-        <p className="font-semibold capitalize">{postedBy?.userName}</p>
-      </Link>
+        <p className="font-semibold capitalize" style={{ color: "#310B0B" }}>
+          {postedBy?.userName}
+        </p>
+      </div>
     </div>
   );
 };

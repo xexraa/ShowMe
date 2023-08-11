@@ -60,7 +60,7 @@ const PinDetail = ({ user }) => {
   return (
     <>
       <div
-        className="flex xl-flex-row flex-col m-auto bg-white"
+        className="flex xl-flex-row flex-col m-auto bg-gray-100"
         style={{ maxWidth: "1500px", borderRadius: "32px" }}
       >
         <div className="flex justify-center items-center md:items-start flex-initial">
@@ -82,7 +82,7 @@ const PinDetail = ({ user }) => {
                 <MdDownloadForOffline />
               </a>
             </div>
-            <a href={pinDetail.destination} target="_blank" rel="noreferrer">
+            <a href={pinDetail.destination.startsWith("http") ? pinDetail.destination : `https://${pinDetail.destination}`} target="_blank" rel="noreferrer">
               {pinDetail.destination}
             </a>
           </div>
@@ -93,11 +93,11 @@ const PinDetail = ({ user }) => {
             <p className="mt-3">{pinDetail.about}</p>
           </div>
           <Link
-            to={`user-profile/${pinDetail.postedBy?._id}`}
-            className="flex gap-2 mt-5 items-center bg-white rounded-lg"
+            to={`/user-profile/${pinDetail.postedBy?._id}`}
+            className="flex gap-2 mt-5 items-center bg-gray-100 rounded-lg"
           >
             <img
-              className="w-8 h-8 rounded-full object-cover"
+              className="w-10 h-10 rounded-full object-cover"
               src={pinDetail.postedBy?.image}
               alt="user-profile"
             />
@@ -112,11 +112,13 @@ const PinDetail = ({ user }) => {
                 className="flex gap-2 mt-5 items-center bg-white rounded-lg"
                 key={i}
               >
-                <img
-                  src={comment.postedBy.image}
-                  alt="user-profile"
-                  className="w-10 h-10 rounded-full cursor-pointer"
-                />
+                <Link to={`/user-profile/${comment.postedBy?._id}`}>
+                  <img
+                    src={comment.postedBy.image}
+                    alt="user-profile"
+                    className="w-8 h-8 rounded-full cursor-pointer"
+                  />
+                </Link>
                 <div className="flex flex-col">
                   <p className="font-bold">{comment.postedBy.userName}</p>
                   <p>{comment.comment}</p>
@@ -125,13 +127,13 @@ const PinDetail = ({ user }) => {
             ))}
           </div>
           <div className="flex flex-wrap mt-6 gap-3">
-            <Link to={`user-profile/${pinDetail.postedBy?._id}`}>
+            <div>
               <img
                 className="w-10 h-10 rounded-full cursor-object"
-                src={pinDetail.postedBy?.image}
+                src={user.image}
                 alt="user-profile"
               />
-            </Link>
+            </div>
             <input
               className="flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"
               type="text"
@@ -140,7 +142,7 @@ const PinDetail = ({ user }) => {
               onChange={(e) => setComment(e.target.value)}
             />
             <button
-              className="bg-red-500 text-white rounded-full px-6 py-2 font-semibold text-base outline-none"
+              className="bg-[#00d4ff] text-white rounded-full px-6 py-2 font-semibold text-base outline-none"
               type="button"
               onClick={addComment}
             >
@@ -149,7 +151,6 @@ const PinDetail = ({ user }) => {
           </div>
         </div>
       </div>
-      {console.log(pins?.length)}
       {pins?.length > 0 ? (
         <>
           <h2 className="text-center font-bold text-2x mt-8 mb-4">
